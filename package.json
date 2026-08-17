@@ -20,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/belle-wissell/asset-sync.git"
   },
-  "author": "Scott Thiessen",
+  "author": "Scott Thiessen <scott@bwco.info>",
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/belle-wissell/asset-sync/issues"

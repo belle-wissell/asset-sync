@@ -115,10 +115,12 @@ async function publish(staging, source, hasAssets) {
 
 // CLI
 
-// The default config lives next to this script, not in process.cwd() — a scheduler-invoked
-// process has an unpredictable (or irrelevant) working directory.
-const APP_DIR = path.dirname(fileURLToPath(import.meta.url));
-const CONFIG_FILE = path.join(APP_DIR, 'config.json');
+// The default config lives in process.cwd(), not next to this script — npm always runs
+// scripts with cwd set to the invoking project's root, so this is what lets each project
+// keep its own config under a plain `npm run` convention. A scheduler-invoked process (cron,
+// Task Scheduler) has to either set its job's working directory explicitly or pass
+// --config <absolute-path>, since its cwd otherwise can't be relied on.
+const CONFIG_FILE = path.join(process.cwd(), 'asset-sync.config.json');
 
 const USAGE = `
   Usage: asset-sync [options]
