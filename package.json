@@ -1,7 +1,10 @@
 {
-  "name": "asset-sync",
+  "name": "@belle-wissell/asset-sync",
   "version": "1.0.0",
-  "description": "Standalone companion app that syncs JSON data sources and their assets into a kiosk app's data folder",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Syncs JSON data sources and their referenced assets into a local folder for offline apps — install as a project dependency or run standalone on a kiosk",
   "type": "module",
   "bin": {
     "asset-sync": "asset-sync.js"
