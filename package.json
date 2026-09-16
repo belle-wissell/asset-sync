@@ -6,6 +6,12 @@
   },
   "description": "Syncs JSON data sources and their referenced assets into a local folder for offline apps — install as a project dependency or run standalone on a kiosk",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
   "bin": {
     "asset-sync": "asset-sync.js"
   },

@@ -37,7 +37,7 @@ If no config is found, a starter `asset-sync.config.json` is written in the proj
 There are a number of ways to make this work, but one option is to install the package globally.
 
 ```bash
-npm install -g @belle-wissell/asset-sync@1.0.0
+npm install -g @belle-wissell/asset-sync
 ```
 
 Put `asset-sync.config.json` in a dedicated folder, e.g. `C:\kiosk\asset-sync.config.json`, and schedule `asset-sync` to run nightly with the OS scheduler. Since the default config resolves relative to the current working directory (not to wherever the package is installed), the scheduled job must either run with its working directory set to that folder, or pass an explicit absolute `--config` path:
@@ -62,6 +62,27 @@ Start in:  C:\kiosk
 - `--dry-run` — Report without writing. Reports exactly what would be fetched and written, without requesting a single asset or touching your disk.
 - `-h, --help` — Show help message
 - `-v, --version` — Show version
+
+### From code
+
+The same sync is available as a function, e.g. for an Electron main process. It takes the config as an object, logs nothing, and resolves with what was updated and what was skipped:
+
+```js
+import { sync } from '@belle-wissell/asset-sync';
+
+const { updated, skipped } = await sync(config, {
+  concurrency: 8, // optional, like --concurrency
+  jsonOnly: false, // optional, like --json-only
+  dryRun: false, // optional, like --dry-run
+  onProgress: ({ source, sourceCount, url, done, total, bytes }) => {}
+});
+
+for (const { source, failures } of skipped) {
+  console.warn(source.url, failures.map(({ error }) => error.message));
+}
+```
+
+It rejects only when the config is invalid or something unexpected fails; a source that couldn't be downloaded is left untouched on disk and listed in `skipped`. Types ship with the package.
 
 ## Configuration
 
