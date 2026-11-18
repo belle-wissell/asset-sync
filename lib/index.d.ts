@@ -1,5 +1,7 @@
 export interface SyncSource {
   url: string;
+  /** Extra headers for the JSON request only (not assets). Values may use `${ENV_VAR}`. */
+  headers?: Record<string, string>;
   outputFile: string;
   assets?: { outputFolder: string; fields?: string[] };
 }

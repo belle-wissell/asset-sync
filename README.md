@@ -101,7 +101,22 @@ An `asset-sync.config.json` file in the project root (current working directory)
 |--------------|------------|-------------------------------------------------------------------------------|
 | `url`        | *required* | JSON endpoint to fetch                                                        |
 | `outputFile` | *required* | Name for the downloaded JSON                                                  |
+| `headers`    | *none*     | Extra headers for the JSON request, e.g. an API key (see below)               |
 | `assets`     | *none*     | Enables asset downloading for this source. Omit it to download the JSON only. |
+
+### Authentication
+
+If an endpoint needs an API key, give the source a `headers` object. A value can pull from an environment variable with `${NAME}`, which keeps the key out of a committed config:
+
+```json
+{
+  "url": "https://example.com/api/stories",
+  "outputFile": "stories.json",
+  "headers": { "X-API-Key": "${STORIES_API_KEY}" }
+}
+```
+
+Set the variable in the shell, or put it in a git-ignored `.env` file and run with `node --env-file=.env`. A missing variable stops the run before anything is fetched. Headers are sent to the JSON endpoint only, never to asset URLs.
 
 ### `assets` (on a source, once present)
 
